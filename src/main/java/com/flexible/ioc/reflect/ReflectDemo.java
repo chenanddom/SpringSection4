@@ -1,33 +1,45 @@
 package com.flexible.ioc.reflect;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ReflectDemo {
 
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        //Àà×°ÔØÆ÷»ñÈ¡CarÀà¶ÔÏó
+        //ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Carï¿½ï¿½ï¿½ï¿½ï¿½
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Class clazz = loader.loadClass("com.flexible.ioc.reflect.Person");
-        //»ñÈ¡ÀàµÄÄ¬ÈÏ¹¹ÔìÆ÷¶ÔÏó²¢ÇÒÍ¨¹ıËüÊµÀı»¯
+        //ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ä¬ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
 //        Constructor constructor = clazz.getDeclaredConstructor((Class[]) null);
         Constructor constructor = clazz.getDeclaredConstructor((Class[]) null);
         Person person = (Person) constructor.newInstance();
-        //Í¨¹ı·´Éä·½·¨ÉèÖÃÊôĞÔ
+        //Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ä·½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Method setUserName = clazz.getMethod("setUserName", String.class);
         setUserName.invoke(person, "zhangsan");
         Method setUserAge = clazz.getMethod("setUserAge", Integer.class);
         setUserAge.invoke(person, 26);
         System.out.println(person.toString());
-//        System.out.println(setUserAge.getReturnType());//»ñÈ¡·µ»ØÖµÀàĞÍ
-//        System.out.println(setUserAge.getParameterTypes());//»ñÈ¡²ÎÊıÀàĞÍ
+//        System.out.println(setUserAge.getReturnType());//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
+//        System.out.println(setUserAge.getParameterTypes());//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         System.out.println(setUserAge.getParameterAnnotations());
         System.out.println(loader);
         System.out.println(loader.getParent());
-        //¸ù¼ÇÔØÆ÷²»ÊÇClassLoaderµÄ×ÓÀà£¬ÊÇC++Ğ´µÄ£¬ÎŞ·¨»ñÈ¡µ½
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ClassLoaderï¿½ï¿½ï¿½ï¿½ï¿½à£¬ï¿½ï¿½C++Ğ´ï¿½Ä£ï¿½ï¿½Ş·ï¿½ï¿½ï¿½È¡ï¿½ï¿½
         System.out.println(loader.getParent().getParent());
-            
-
+//        è·å–æ‰€æœ‰å¾—å±æ€§
+        Field[] declaredFields = clazz.getDeclaredFields();
+        for (Field field:declaredFields) {
+            //å°†ç§æœ‰å±æ€§è®¾ç½®ä¸ºå¯ä»¥æ“ä½œï¼Œè€Œä¸éœ€è¦é€šè¿‡ç±»å¾—æ–¹æ³•æ“ä½œå±æ€§ã€‚
+            field.setAccessible(true);
+            System.out.println(field.getName());
+            if (field.getName()=="userName"){
+                field.set(person,"test1");
+            }else if (field.getName()=="userAge"){
+                field.set(person,28);
+            }
+        }
+        System.out.println(person.toString());
     }
 }
