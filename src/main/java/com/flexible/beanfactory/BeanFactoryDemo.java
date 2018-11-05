@@ -36,12 +36,12 @@ public class BeanFactoryDemo {
         Foreman foreman = factory.getBean("foreman",Foreman.class);
         foreman.setWorker(null);
         System.out.println("foreman is ready for use");
-        File file = new File("E:\\data.rar");
+      /*  File file = new File("E:\\data.rar");
         FileInputStream input = new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "text/plain", IOUtils.toByteArray(input));
 
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)multipartFile;
-        System.out.println("foreman is ready for use");
+        System.out.println("foreman is ready for use");*/
 
     }
 }

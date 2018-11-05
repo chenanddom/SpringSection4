@@ -1,0 +1,1 @@
+这是使用spring Resource接口的例子
