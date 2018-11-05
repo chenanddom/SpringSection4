@@ -43,6 +43,7 @@ public class FileSourceDemo {
             System.out.println("res1:" + res1.getFilename());
             System.out.println("res2:" + res2.getFilename());
             Resource relative = res1.createRelative("createFile.txt");
+
             System.out.println(relative.getFilename());
         } catch (IOException e) {
             e.printStackTrace();
