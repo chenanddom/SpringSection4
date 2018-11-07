@@ -14,6 +14,8 @@ public class Person implements BeanFactoryAware, BeanNameAware, InitializingBean
 
     private String userName;
     private Integer userAge;
+    private BeanFactory beanFactory;
+    private String beanName;
 
     public Person() {
         System.out.println("调用了Person()的构造函数");
@@ -24,6 +26,7 @@ public class Person implements BeanFactoryAware, BeanNameAware, InitializingBean
     }
 
     public void setUserName(String userName) {
+        System.out.println("Person.setUserName");
         this.userName = userName;
     }
 
@@ -32,26 +35,45 @@ public class Person implements BeanFactoryAware, BeanNameAware, InitializingBean
     }
 
     public void setUserAge(Integer userAge) {
+        System.out.println("Person.setUserAge");
         this.userAge = userAge;
     }
 
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-
+        System.out.println("调用BeanFactoryAware.setBeanFactory");
+        this.beanFactory=beanFactory;
     }
 
     @Override
     public void setBeanName(String name) {
-
+        System.out.println("调用BeanNameAware.setBeanName");
+        this.beanName=name;
     }
 
     @Override
     public void destroy() throws Exception {
-
+        System.out.println("调用DisposableBean.destroy");
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        System.out.println("调用InitializingBean.afterPropertiesSet");
+    }
 
+    public void mInit(){
+        System.out.println("调用了配置文件配置的init-method所指定的方法mInit()");
+    }
+    public void mDestroy(){
+        System.out.println("调用了配置文件配置的destroy-method所指定的mDestroy()");
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "userName='" + userName + '\'' +
+                ", userAge=" + userAge +
+                ", beanName='" + beanName + '\'' +
+                '}';
     }
 }

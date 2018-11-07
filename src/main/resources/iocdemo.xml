@@ -7,4 +7,11 @@
    <bean id="zhangsan" class="com.flexible.ioc.iocstyle.Zhangsan"/>
    <bean id="foreman" class="com.flexible.ioc.iocstyle.Foreman"
         p:worker-ref="zhangsan"/>
+
+	<bean id="person" class="com.flexible.beanfactory.beanfactorylifecyle.Person"
+	init-method="mInit" destroy-method="mDestroy"
+	p:userName="zhangsan"
+	p:userAge="20"></bean>
+
+
 </beans>
